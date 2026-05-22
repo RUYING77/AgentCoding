@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUYING77 - GitHub Repositories</title>
+    <meta name="description" content="RUYING77 的 GitHub 儲存庫列表，由 Supabase 動態提供資料">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #F0F4F8;
+            --bg-card: #FFFFFF;
+            --bg-sidebar: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --accent: #2563EB;
+            --accent-light: #EFF6FF;
+            --accent-hover: #1D4ED8;
+            --border: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --radius: 14px;
+            --trans: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Layout ────────────────────────────────────────────── */
+        .layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Top Nav ────────────────────────────────────────────── */
+        .topnav {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo {
+            width: 36px; height: 36px;
+            background: var(--accent);
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .nav-title { font-weight: 600; font-size: 1.1rem; }
+
+        .nav-meta {
+            display: flex; align-items: center; gap: 1.5rem;
+        }
+
+        .status-dot {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ── Sidebar ────────────────────────────────────────────── */
+        .sidebar {
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--accent-light);
+            border-radius: var(--radius);
+            border: 1px solid #BFDBFE;
+        }
+
+        .avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .avatar-placeholder {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563EB, #7C3AED);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.5rem;
+            border: 3px solid #fff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-name { font-weight: 700; font-size: 1.1rem; }
+        .profile-sub { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .github-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--text-primary);
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--trans);
+        }
+
+        .github-link:hover { background: #1E293B; transform: translateY(-1px); }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .stat-box {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.875rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.75rem; color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Filter buttons */
+        .filter-section h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .filter-btns {
+            display: flex; flex-direction: column; gap: 0.4rem;
+        }
+
+        .filter-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.6rem 0.875rem;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--trans);
+            text-align: left;
+        }
+
+        .filter-btn:hover { background: var(--bg-body); color: var(--text-primary); }
+        .filter-btn.active { background: var(--accent-light); color: var(--accent); }
+
+        .filter-count {
+            font-size: 0.75rem;
+            background: var(--border);
+            border-radius: 20px;
+            padding: 1px 7px;
+        }
+
+        .filter-btn.active .filter-count {
+            background: #BFDBFE; color: var(--accent);
+        }
+
+        /* ── Main content ────────────────────────────────────────── */
+        .main {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-header h1 {
+            font-size: 1.5rem; font-weight: 700;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            width: 260px;
+            transition: var(--trans);
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        .search-bar input {
+            border: none; outline: none; background: transparent;
+            font-size: 0.875rem; color: var(--text-primary);
+            width: 100%;
+        }
+
+        .search-bar svg { color: var(--text-muted); flex-shrink: 0; }
+
+        /* Repo Grid */
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .repo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            transition: var(--trans);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            animation: fadeUp 0.4s ease-out both;
+        }
+
+        .repo-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .repo-card-top {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .repo-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: var(--accent-light);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+
+        .repo-ext-link {
+            color: var(--text-muted);
+            transition: color var(--trans);
+        }
+
+        .repo-card:hover .repo-ext-link { color: var(--accent); }
+
+        .repo-name {
+            font-size: 1rem; font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .repo-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            flex-grow: 1;
+            /* Clamp to 2 lines */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .repo-footer {
+            display: flex; align-items: center; gap: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .lang-dot {
+            display: flex; align-items: center; gap: 0.4rem;
+            font-size: 0.8rem; color: var(--text-secondary);
+        }
+
+        .dot-color {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .repo-stat {
+            display: flex; align-items: center; gap: 0.35rem;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+
+        .updated-label {
+            margin-left: auto;
+            font-size: 0.75rem; color: var(--text-muted);
+        }
+
+        /* Language color map */
+        .lang-HTML     { background: #e44d26; }
+        .lang-Python   { background: #3572A5; }
+        .lang-JavaScript { background: #f1e05a; }
+        .lang-TypeScript { background: #2b7489; }
+        .lang-CSS      { background: #563d7c; }
+        .lang-Other    { background: #8B949E; }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex; flex-direction: column; gap: 0.875rem;
+        }
+
+        .sk-h { height: 16px; }
+        .sk-sm { width: 60%; }
+        .sk-md { width: 80%; }
+        .sk-full { width: 100%; }
+
+        /* Empty & Error states */
+        .state-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .state-box h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .state-box p  { font-size: 0.9rem; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; }
+            .profile-card { flex-direction: row; text-align: left; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+            .main { padding: 1.5rem; }
+            .main-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .search-bar { width: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            .topnav { padding: 0 1rem; }
+            .repo-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+    <!-- Top Navigation -->
+    <nav class="topnav">
+        <a href="https://github.com/RUYING77" class="nav-brand" target="_blank">
+            <div class="nav-logo">R</div>
+            <span class="nav-title">RUYING77</span>
+        </a>
+        <div class="nav-meta">
+            <span class="status-dot">
+                <span class="dot" id="status-dot"></span>
+                <span id="status-label">連接 Supabase...</span>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="profile-card">
+            <img class="avatar" src="https://avatars.githubusercontent.com/u/126662825?v=4" 
+                 alt="RUYING77 avatar" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="avatar-placeholder" style="display:none">R</div>
+            <div style="text-align:center">
+                <div class="profile-name">RUYING77</div>
+                <div class="profile-sub">Agentic Coder & UI/UX Developer</div>
+            </div>
+            <a href="https://github.com/RUYING77" class="github-link" target="_blank">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                GitHub Profile
+            </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" id="stat-repos">–</div>
+                <div class="stat-label">Repos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-stars">–</div>
+                <div class="stat-label">Stars</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-forks">–</div>
+                <div class="stat-label">Forks</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-langs">–</div>
+                <div class="stat-label">Languages</div>
+            </div>
+        </div>
+
+        <!-- Language Filter -->
+        <div class="filter-section">
+            <h4>Language</h4>
+            <div class="filter-btns" id="lang-filters"></div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+        <div class="main-header">
+            <h1>Repositories</h1>
+            <div class="search-bar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="search-input" placeholder="搜尋儲存庫..." autocomplete="off">
+            </div>
+        </div>
+
+        <div class="repo-grid" id="repo-grid">
+            <!-- Skeleton cards while loading -->
+            <div class="skeleton-card">
+                <div class="skeleton sk-h sk-md"></div>
+                <div class="skeleton sk-h sk-full"></div>
+                <div class="skeleton sk-h sk-sm"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton sk-h sk-md"></div>
+                <div class="skeleton sk-h sk-full"></div>
+                <div class="skeleton sk-h sk-sm"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton sk-h sk-md"></div>
+                <div class="skeleton sk-h sk-full"></div>
+                <div class="skeleton sk-h sk-sm"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+// ── Supabase 設定 ──────────────────────────────────────────
+const SUPABASE_URL  = "https://utcrntxfqlmlehwwfbsr.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Y3JudHhmcWxtbGVod3dmYnNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0MzE2NDMsImV4cCI6MjA5NTAwNzY0M30.65U1QSTKe2QF7Xe0ZlK_e_ascyA89VQTsGJfh9RNHWg";
+
+// ── State ──────────────────────────────────────────────────
+let allRepos = [];
+let activeFilter = 'All';
+
+// ── Lang color helper ──────────────────────────────────────
+function langClass(lang) {
+    const map = { HTML: 'lang-HTML', Python: 'lang-Python', JavaScript: 'lang-JavaScript', TypeScript: 'lang-TypeScript', CSS: 'lang-CSS' };
+    return map[lang] || 'lang-Other';
+}
+
+// ── Format date ────────────────────────────────────────────
+function fmtDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    const diff = Date.now() - d.getTime();
+    const days = Math.floor(diff / 86400000);
+    if (days === 0) return '今天';
+    if (days === 1) return '昨天';
+    if (days < 30) return `${days} 天前`;
+    if (days < 365) return `${Math.floor(days/30)} 個月前`;
+    return `${Math.floor(days/365)} 年前`;
+}
+
+// ── Fetch from Supabase ────────────────────────────────────
+async function fetchRepos() {
+    const url = `${SUPABASE_URL}/rest/v1/github_repos?select=*&order=updated_at.desc`;
+    const res = await fetch(url, {
+        headers: {
+            "apikey": SUPABASE_ANON,
+            "Authorization": `Bearer ${SUPABASE_ANON}`
+        }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+}
+
+// ── Build lang filter buttons ──────────────────────────────
+function buildFilters(repos) {
+    const counts = {};
+    repos.forEach(r => {
+        const lang = r.language || 'Other';
+        counts[lang] = (counts[lang] || 0) + 1;
+    });
+
+    const container = document.getElementById('lang-filters');
+    const allBtn = createFilterBtn('All', repos.length);
+    container.appendChild(allBtn);
+
+    Object.entries(counts).sort((a,b) => b[1]-a[1]).forEach(([lang, cnt]) => {
+        container.appendChild(createFilterBtn(lang, cnt));
+    });
+
+    // Update sidebar stats
+    document.getElementById('stat-repos').textContent = repos.length;
+    document.getElementById('stat-stars').textContent = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+    document.getElementById('stat-forks').textContent  = repos.reduce((s, r) => s + (r.forks_count || 0), 0);
+    document.getElementById('stat-langs').textContent  = Object.keys(counts).length;
+}
+
+function createFilterBtn(lang, count) {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (lang === 'All' ? ' active' : '');
+    btn.dataset.lang = lang;
+    btn.innerHTML = `<span>${lang}</span><span class="filter-count">${count}</span>`;
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = lang;
+        renderGrid();
+    });
+    return btn;
+}
+
+// ── Render repo cards ──────────────────────────────────────
+function renderGrid() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const filtered = allRepos.filter(r => {
+        const matchLang = activeFilter === 'All' || (r.language || 'Other') === activeFilter;
+        const matchQ = !query
+            || r.name.toLowerCase().includes(query)
+            || (r.description || '').toLowerCase().includes(query);
+        return matchLang && matchQ;
+    });
+
+    const grid = document.getElementById('repo-grid');
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div class="state-box"><h3>找不到符合的儲存庫</h3><p>試試看其他關鍵字或語言篩選</p></div>`;
+        return;
+    }
+
+    filtered.forEach((repo, i) => {
+        const lang = repo.language || 'Other';
+        const card = document.createElement('a');
+        card.href = repo.html_url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.className = 'repo-card';
+        card.style.animationDelay = `${i * 60}ms`;
+
+        card.innerHTML = `
+            <div class="repo-card-top">
+                <div class="repo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <svg class="repo-ext-link" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </div>
+            <div class="repo-name">${repo.name}</div>
+            <div class="repo-desc">${repo.description || '<em style="color:var(--text-muted)">暫無說明</em>'}</div>
+            <div class="repo-footer">
+                <span class="lang-dot">
+                    <span class="dot-color ${langClass(lang)}"></span>
+                    ${lang}
+                </span>
+                <span class="repo-stat">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    ${repo.stargazers_count || 0}
+                </span>
+                <span class="repo-stat">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                    ${repo.forks_count || 0}
+                </span>
+                <span class="updated-label">${fmtDate(repo.updated_at)}</span>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// ── Search live ────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', renderGrid);
+
+// ── Init ───────────────────────────────────────────────────
+async function init() {
+    const dot = document.getElementById('status-dot');
+    const label = document.getElementById('status-label');
+
+    try {
+        allRepos = await fetchRepos();
+        dot.style.background = '#10B981';
+        label.textContent = `Supabase 已連線 — ${allRepos.length} 個儲存庫`;
+        buildFilters(allRepos);
+        renderGrid();
+    } catch (err) {
+        dot.style.background = '#EF4444';
+        label.textContent = '連線失敗';
+        document.getElementById('repo-grid').innerHTML = `
+            <div class="state-box">
+                <h3>無法載入資料</h3>
+                <p>Supabase 連線失敗：${err.message}</p>
+            </div>`;
+    }
+}
+
+init();
+</script>
+</body>
+</html>
