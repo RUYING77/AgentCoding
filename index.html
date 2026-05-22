@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUYING77 | GitHub Portfolio Dashboard</title>
+    <!-- Google Fonts: Outfit for Headings, Inter for Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS 變數與設計系統 */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.45);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --primary: #8b5cf6; /* 霓虹紫 */
+            --primary-glow: rgba(139, 92, 246, 0.15);
+            --secondary: #3b82f6; /* 極光藍 */
+            --accent: #10b981; /* 精靈綠 */
+            --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            --gradient-text: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* 背景流光裝飾效果 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 內容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==================== 頂部個人資訊面板 (Profile Card) ==================== */
+        .profile-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 漸層邊界光 */
+        .profile-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+
+        .avatar-container::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0f172a;
+            background-color: #1f2937;
+        }
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .profile-username {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-family: monospace;
+        }
+
+        .profile-bio {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            max-width: 700px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition-smooth);
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            font-size: 1.2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sync-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-left: auto;
+            align-self: flex-start;
+        }
+
+        .sync-btn:hover {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .sync-btn i {
+            transition: transform 0.5s ease;
+        }
+
+        .sync-btn:active i {
+            transform: rotate(360deg);
+        }
+
+        /* ==================== 搜尋與控制面板 ==================== */
+        .controls-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .search-sort-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            flex-grow: 1;
+            min-width: 280px;
+        }
+
+        .search-box-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 16px 14px 48px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sort-select-wrapper {
+            position: relative;
+            min-width: 180px;
+        }
+
+        .sort-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 36px 14px 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .sort-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .sort-select-wrapper::after {
+            content: '\f0dc';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* 程式語言過濾器 */
+        .lang-filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .lang-tags-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .lang-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .lang-tag:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .lang-tag.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .lang-color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ==================== 儲存庫卡片網格 (Repos Grid) ==================== */
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .repo-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 卡片光效背景 */
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .repo-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.08), 0 0 1px rgba(139, 92, 246, 0.3);
+        }
+
+        .repo-card:hover::before {
+            opacity: 1;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .repo-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 80%;
+        }
+
+        .repo-icon {
+            font-size: 1.25rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .repo-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+
+        .repo-name:hover {
+            color: var(--secondary);
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fork-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .repo-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 4.8em;
+        }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .repo-lang {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .repo-stats {
+            display: flex;
+            gap: 14px;
+            color: var(--text-muted);
+        }
+
+        .repo-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition-smooth);
+        }
+
+        .repo-stat-item:hover {
+            color: var(--text-primary);
+        }
+
+        .repo-update-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* 外部連結按鈕 */
+        .repo-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .repo-link-btn {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .repo-link-btn:hover {
+            color: var(--text-primary);
+            transform: scale(1.1);
+        }
+
+        /* ==================== 骨架屏載入動畫 (Skeleton Loader) ==================== */
+        .skeleton-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            pointer-events: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0.02) 25%, 
+                rgba(255, 255, 255, 0.08) 50%, 
+                rgba(255, 255, 255, 0.02) 75%
+            );
+            background-size: 200% 100%;
+            animation: loading-shimmer 1.5s infinite;
+        }
+
+        @keyframes loading-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-title {
+            height: 22px;
+            width: 60%;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .skeleton-text {
+            height: 14px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-text:nth-child(3) { width: 90%; }
+        .skeleton-text:nth-child(4) { width: 75%; margin-bottom: 30px; }
+
+        .skeleton-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 16px;
+        }
+
+        .skeleton-badge {
+            height: 14px;
+            width: 70px;
+            border-radius: 4px;
+        }
+
+        .skeleton-stats {
+            display: flex;
+            gap: 12px;
+        }
+
+        .skeleton-stat {
+            height: 14px;
+            width: 40px;
+            border-radius: 4px;
+        }
+
+        /* 查無結果 / 錯誤提示 */
+        .empty-state, .error-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i, .error-state i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .error-state i {
+            color: #ef4444;
+        }
+
+        .empty-state h3, .error-state h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        /* ==================== 頁尾 (Footer) ==================== */
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 24px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        footer a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .profile-panel {
+                flex-direction: column;
+                text-align: center;
+                gap: 24px;
+                padding: 30px 20px;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .sync-btn {
+                margin: 0 auto;
+                align-self: center;
+            }
+
+            .search-sort-row {
+                flex-direction: column;
+            }
+
+            .sort-select-wrapper {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- 個人頭像與資訊 -->
+        <header class="profile-panel" id="profile-panel">
+            <div class="avatar-container">
+                <!-- 預設占位，JS 會覆寫 -->
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200&auto=format&fit=crop" alt="RUYING77" class="profile-avatar" id="user-avatar">
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name" id="user-name">RUYING77</h1>
+                <p class="profile-username" id="user-login">@RUYING77</p>
+                <p class="profile-bio" id="user-bio">正在讀取 GitHub 個人簡介資訊...</p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-code-branch stat-icon"></i>
+                        <div>
+                            <div class="stat-val" id="stat-repos">-</div>
+                            <div class="stat-lbl">儲存庫</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-users stat-icon"></i>
+                        <div>
+                            <div class="stat-val" id="stat-followers">-</div>
+                            <div class="stat-lbl">追蹤者</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-user-plus stat-icon"></i>
+                        <div>
+                            <div class="stat-val" id="stat-following">-</div>
+                            <div class="stat-lbl">追蹤中</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sync-btn" id="sync-button" title="同步最新 GitHub 資料">
+                <i class="fa-solid fa-rotate"></i> 同步資料
+            </button>
+        </header>
+
+        <!-- 搜尋與過濾面板 -->
+        <section class="controls-panel">
+            <div class="search-sort-row">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="search-input" id="search-input" placeholder="搜尋儲存庫名稱或描述...">
+                </div>
+                
+                <div class="sort-select-wrapper">
+                    <select class="sort-select" id="sort-select">
+                        <option value="updated">最後更新時間</option>
+                        <option value="stars">星標數量 (Stars)</option>
+                        <option value="forks">分支數量 (Forks)</option>
+                        <option value="name">儲存庫名稱 (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 程式語言篩選 -->
+            <div class="lang-filter-section">
+                <span class="filter-label">依程式語言篩選：</span>
+                <div class="lang-tags-container" id="lang-tags-container">
+                    <!-- JS 動態生成 -->
+                    <span class="lang-tag active" data-lang="all">全部</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 儲存庫網格區域 -->
+        <main class="repos-grid" id="repos-grid">
+            <!-- 初始 Skeleton 骨架屏載入動畫 -->
+            <div class="skeleton-card">
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer">
+                    <div class="skeleton-badge shimmer"></div>
+                    <div class="skeleton-stats">
+                        <div class="skeleton-stat shimmer"></div>
+                        <div class="skeleton-stat shimmer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer">
+                    <div class="skeleton-badge shimmer"></div>
+                    <div class="skeleton-stats">
+                        <div class="skeleton-stat shimmer"></div>
+                        <div class="skeleton-stat shimmer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-text shimmer"></div>
+                <div class="skeleton-footer">
+                    <div class="skeleton-badge shimmer"></div>
+                    <div class="skeleton-stats">
+                        <div class="skeleton-stat shimmer"></div>
+                        <div class="skeleton-stat shimmer"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 頁尾 -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> RUYING77. All Rights Reserved.</p>
+            <p>Powered by <a href="https://github.com/RUYING77/AgentCoding" target="_blank">AgentCoding</a> &amp; Antigravity AI</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // 設定目前的年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const GITHUB_USERNAME = 'RUYING77';
+        const CACHE_EXPIRATION = 3600000; // 快取過期時間：1 小時 (毫秒)
+
+        // 程式語言的背景色對照表
+        const LANG_COLORS = {
+            'JavaScript': '#f1e05a',
+            'TypeScript': '#3178c6',
+            'Python': '#3572a5',
+            'HTML': '#e34c26',
+            'CSS': '#563d7c',
+            'Vue': '#41b883',
+            'React': '#61dafb',
+            'C++': '#f34b7d',
+            'C': '#555555',
+            'C#': '#178600',
+            'Java': '#b07219',
+            'PHP': '#4f5d95',
+            'Ruby': '#701516',
+            'Go': '#00add8',
+            'Rust': '#dea584',
+            'Shell': '#89e051',
+            'Swift': '#f05138',
+            'Kotlin': '#f18e33',
+            'Dart': '#00b4ab',
+            'Jupyter Notebook': '#da5b0b',
+            'default': '#cbd5e1'
+        };
+
+        // 全域狀態
+        let state = {
+            profile: null,
+            repos: [],
+            activeFilter: 'all',
+            searchQuery: '',
+            sortBy: 'updated'
+        };
+
+        // 初始化
+        window.addEventListener('DOMContentLoaded', init);
+
+        async function init() {
+            setupEventListeners();
+            await loadData();
+        }
+
+        // 監聽器設定
+        function setupEventListeners() {
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                state.searchQuery = e.target.value.toLowerCase().trim();
+                renderRepos();
+            });
+
+            document.getElementById('sort-select').addEventListener('change', (e) => {
+                state.sortBy = e.target.value;
+                renderRepos();
+            });
+
+            document.getElementById('sync-button').addEventListener('click', async () => {
+                const btn = document.getElementById('sync-button');
+                btn.disabled = true;
+                btn.querySelector('i').classList.add('fa-spin');
+                
+                // 清除快取並重新載入
+                localStorage.removeItem(`gh_profile_${GITHUB_USERNAME}`);
+                localStorage.removeItem(`gh_repos_${GITHUB_USERNAME}`);
+                localStorage.removeItem(`gh_cache_time_${GITHUB_USERNAME}`);
+                
+                await loadData(true);
+                
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.querySelector('i').classList.remove('fa-spin');
+                }, 500);
+            });
+        }
+
+        // 載入資料 (優先讀取 LocalStorage 快取)
+        async function loadData(forceRefresh = false) {
+            const cacheTime = localStorage.getItem(`gh_cache_time_${GITHUB_USERNAME}`);
+            const isCacheValid = cacheTime && (Date.now() - parseInt(cacheTime) < CACHE_EXPIRATION);
+
+            if (!forceRefresh && isCacheValid) {
+                const cachedProfile = localStorage.getItem(`gh_profile_${GITHUB_USERNAME}`);
+                const cachedRepos = localStorage.getItem(`gh_repos_${GITHUB_USERNAME}`);
+                
+                if (cachedProfile && cachedRepos) {
+                    state.profile = JSON.parse(cachedProfile);
+                    state.repos = JSON.parse(cachedRepos);
+                    
+                    renderProfile();
+                    renderLanguageFilters();
+                    renderRepos();
+                    return;
+                }
+            }
+
+            // 無快取或快取過期，從 API 抓取
+            try {
+                const [profileRes, reposRes] = await Promise.all([
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
+                ]);
+
+                if (!profileRes.ok || !reposRes.ok) {
+                    throw new Error('無法取得 GitHub 資料，可能已達到 API 請求限制 (Rate Limit)。');
+                }
+
+                state.profile = await profileRes.json();
+                state.repos = await reposRes.json();
+
+                // 寫入快取
+                localStorage.setItem(`gh_profile_${GITHUB_USERNAME}`, JSON.stringify(state.profile));
+                localStorage.setItem(`gh_repos_${GITHUB_USERNAME}`, JSON.stringify(state.repos));
+                localStorage.setItem(`gh_cache_time_${GITHUB_USERNAME}`, Date.now().toString());
+
+                renderProfile();
+                renderLanguageFilters();
+                renderRepos();
+            } catch (err) {
+                console.error(err);
+                renderError(err.message);
+            }
+        }
+
+        // 渲染個人簡介資訊
+        function renderProfile() {
+            if (!state.profile) return;
+            
+            document.getElementById('user-avatar').src = state.profile.avatar_url;
+            document.getElementById('user-name').textContent = state.profile.name || state.profile.login;
+            document.getElementById('user-login').textContent = `@${state.profile.login}`;
+            document.getElementById('user-bio').textContent = state.profile.bio || '這個 GitHub 用戶很懶，還沒有留下任何簡介...';
+            document.getElementById('stat-repos').textContent = state.profile.public_repos;
+            document.getElementById('stat-followers').textContent = state.profile.followers;
+            document.getElementById('stat-following').textContent = state.profile.following;
+        }
+
+        // 渲染語言過濾器標籤
+        function renderLanguageFilters() {
+            const container = document.getElementById('lang-tags-container');
+            
+            // 提取所有有使用的主要語言
+            const languages = new Set();
+            state.repos.forEach(repo => {
+                if (repo.language) {
+                    languages.add(repo.language);
+                }
+            });
+
+            // 清空除 "全部" 外的內容
+            container.innerHTML = `<span class="lang-tag active" data-lang="all">全部</span>`;
+
+            // 動態產生語言標籤
+            Array.from(languages).sort().forEach(lang => {
+                const color = LANG_COLORS[lang] || LANG_COLORS['default'];
+                const tag = document.createElement('span');
+                tag.className = 'lang-tag';
+                tag.setAttribute('data-lang', lang);
+                tag.innerHTML = `
+                    <span class="lang-color-dot" style="background-color: ${color}"></span>
+                    ${lang}
+                `;
+                container.appendChild(tag);
+            });
+
+            // 重新綁定標籤點擊事件
+            container.querySelectorAll('.lang-tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    container.querySelectorAll('.lang-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    state.activeFilter = tag.getAttribute('data-lang');
+                    renderRepos();
+                });
+            });
+        }
+
+        // 格式化日期為相對時間 (例如：3 天前，或 2023 年 5 月 20 日)
+        function formatRelativeDate(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffDays === 0) {
+                const diffHours = Math.floor(diffMs / 3600000);
+                if (diffHours === 0) {
+                    const diffMins = Math.floor(diffMs / 60000);
+                    return diffMins <= 1 ? '剛剛' : `${diffMins} 分鐘前`;
+                }
+                return `${diffHours} 小時前`;
+            } else if (diffDays === 1) {
+                return '昨天';
+            } else if (diffDays < 30) {
+                return `${diffDays} 天前`;
+            } else {
+                return date.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+        }
+
+        // 渲染儲存庫網格
+        function renderRepos() {
+            const grid = document.getElementById('repos-grid');
+            grid.innerHTML = '';
+
+            // 1. 篩選
+            let filteredRepos = state.repos.filter(repo => {
+                // 排除以名字為專案名的 profile repo（如果需要，一般可留著，這裡留著）
+                
+                // 依程式語言篩選
+                const matchesLang = state.activeFilter === 'all' || repo.language === state.activeFilter;
+                
+                // 依關鍵字搜尋
+                const matchesQuery = !state.searchQuery || 
+                                     repo.name.toLowerCase().includes(state.searchQuery) || 
+                                     (repo.description && repo.description.toLowerCase().includes(state.searchQuery));
+                
+                return matchesLang && matchesQuery;
+            });
+
+            // 2. 排序
+            filteredRepos.sort((a, b) => {
+                if (state.sortBy === 'stars') {
+                    return b.stargazers_count - a.stargazers_count;
+                } else if (state.sortBy === 'forks') {
+                    return b.forks_count - a.forks_count;
+                } else if (state.sortBy === 'name') {
+                    return a.name.localeCompare(b.name);
+                } else {
+                    // 預設為最後更新時間
+                    return new Date(b.updated_at) - new Date(a.updated_at);
+                }
+            });
+
+            // 3. 檢查是否查無結果
+            if (filteredRepos.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-face-frown-open"></i>
+                        <h3>沒有找到符合的儲存庫</h3>
+                        <p>試著調整您的搜尋關鍵字或語言過濾器吧！</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. 動態產生卡片
+            filteredRepos.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'repo-card';
+                
+                const langColor = LANG_COLORS[repo.language] || LANG_COLORS['default'];
+                const formattedDate = formatRelativeDate(repo.updated_at);
+                
+                // 建立卡片內容
+                card.innerHTML = `
+                    <div class="repo-header">
+                        <div class="repo-title-wrapper">
+                            <i class="fa-solid fa-book-bookmark repo-icon"></i>
+                            <a href="${repo.html_url}" target="_blank" class="repo-name" title="${repo.name}">${repo.name}</a>
+                        </div>
+                        <div class="repo-links">
+                            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="repo-link-btn" title="預覽專頁"><i class="fa-solid fa-globe"></i></a>` : ''}
+                            <a href="${repo.html_url}" target="_blank" class="repo-link-btn" title="查看 GitHub 程式碼庫"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                    
+                    ${repo.fork ? `
+                    <div style="margin-bottom: 10px;">
+                        <span class="fork-badge"><i class="fa-solid fa-code-fork"></i> Forked</span>
+                    </div>` : ''}
+                    
+                    <p class="repo-desc">${repo.description || '此專案尚無描述說明。'}</p>
+                    
+                    <div class="repo-meta">
+                        <span class="repo-lang">
+                            ${repo.language ? `
+                                <span class="lang-color-dot" style="background-color: ${langColor}"></span>
+                                ${repo.language}
+                            ` : '<span class="lang-color-dot" style="background-color: var(--text-muted)"></span>Markdown'}
+                        </span>
+                        
+                        <div class="repo-stats">
+                            <div class="repo-stat-item" title="星標數量">
+                                <i class="fa-regular fa-star"></i>
+                                <span>${repo.stargazers_count}</span>
+                            </div>
+                            <div class="repo-stat-item" title="分支數量">
+                                <i class="fa-solid fa-code-fork"></i>
+                                <span>${repo.forks_count}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="repo-update-time">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        更新於 ${formattedDate}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // 渲染錯誤狀態
+        function renderError(message) {
+            const grid = document.getElementById('repos-grid');
+            grid.innerHTML = `
+                <div class="error-state">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>讀取失敗</h3>
+                    <p>${message}</p>
+                    <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">您可以稍後點擊右上角的「同步資料」按鈕重新嘗試。</p>
+                </div>
+            `;
+            
+            // 恢復統計數字的占位符
+            document.getElementById('user-bio').textContent = '無法讀取 GitHub 個人簡介資訊。';
+        }
+    </script>
+</body>
+</html>
