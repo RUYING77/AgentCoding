@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUYING77 | GitHub Profile & Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #080710;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0c0;
+            --accent-primary: #7928ca;
+            --accent-secondary: #ff0080;
+            --accent-gradient: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
+            --blue-gradient: linear-gradient(135deg, #0070f3 0%, #00dfd8 100%);
+            --glass-blur: blur(20px);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* 背景流光泡泡 */
+        .bg-glow-1 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(121, 40, 202, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+            animation: float-slow 20s infinite alternate;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+            animation: float-slow 25s infinite alternate-reverse;
+        }
+
+        @keyframes float-slow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* 網頁主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            z-index: 1;
+        }
+
+        /* 頂部 Header & 個人卡片 */
+        header {
+            margin-bottom: 50px;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--accent-gradient);
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-glow {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            z-index: 1;
+            animation: rotate-glow 8s linear infinite;
+        }
+
+        @keyframes rotate-glow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .avatar {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid var(--bg-color);
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        .profile-info h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #d8d8f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-info .username {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .bio {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 25px auto;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 24px;
+            border-radius: 16px;
+            min-width: 110px;
+            transition: background var(--transition-speed);
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .stat-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .profile-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all var(--transition-speed);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 10px 20px rgba(255, 0, 128, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(255, 0, 128, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* 內容區塊 */
+        .content-section {
+            margin-top: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        /* 搜尋與篩選列 */
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            padding: 14px 18px 14px 48px;
+            border-radius: 14px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all var(--transition-speed);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff0080;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.1);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            max-width: 100%;
+        }
+
+        .filter-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-tag:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .filter-tag.active {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 5px 15px rgba(255, 0, 128, 0.15);
+        }
+
+        /* 儲存庫卡片網格 */
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .repo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 230px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .repo-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(121, 40, 202, 0.15);
+        }
+
+        .repo-card::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .repo-icon-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ff0080;
+            font-size: 1.2rem;
+            transition: background var(--transition-speed);
+        }
+
+        .repo-card:hover .repo-icon-wrapper {
+            background: rgba(255, 0, 128, 0.1);
+            color: #ff0080;
+        }
+
+        .repo-stars-badge {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .repo-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .repo-title a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+
+        .repo-title a:hover {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .repo-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+        }
+
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .repo-lang {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .lang-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* 程式語言顏色對應 */
+        .lang-html { background-color: #e34c26; }
+        .lang-css { background-color: #563d7c; }
+        .lang-javascript { background-color: #f1e05a; }
+        .lang-python { background-color: #3572A5; }
+        .lang-unknown { background-color: #8b949e; }
+
+        .repo-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .repo-link {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: color var(--transition-speed), transform var(--transition-speed);
+            text-decoration: none;
+        }
+
+        .repo-link:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        /* Loading 與錯誤提示 */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            border-top-color: #ff0080;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 頁尾 */
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .profile-card {
+                padding: 30px 20px;
+            }
+            .profile-stats {
+                gap: 15px;
+            }
+            .stat-item {
+                min-width: 90px;
+                padding: 10px 15px;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .controls-row {
+                flex-direction: column;
+            }
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="container">
+        <!-- 個人卡片區塊 -->
+        <header>
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <div class="avatar-glow"></div>
+                    <img id="profile-avatar" src="https://avatars.githubusercontent.com/u/126662825?v=4" alt="RUYING77" class="avatar">
+                </div>
+                <div class="profile-info">
+                    <h1 id="profile-name">RUYING77</h1>
+                    <span class="username">@RUYING77</span>
+                    <p id="profile-bio" class="bio">持續探索 AI 代理編碼、前端網頁開發與新創技術的開發者。</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span id="stat-repos" class="stat-num">3</span>
+                            <span class="stat-label">專案數</span>
+                        </div>
+                        <div class="stat-item">
+                            <span id="stat-followers" class="stat-num">0</span>
+                            <span class="stat-label">追隨者</span>
+                        </div>
+                        <div class="stat-item">
+                            <span id="stat-following" class="stat-num">0</span>
+                            <span class="stat-label">追隨中</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-links">
+                        <a href="https://github.com/RUYING77" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i> 前往 GitHub
+                        </a>
+                        <a id="share-profile-btn" class="btn btn-secondary">
+                            <i class="fas fa-share-alt"></i> 分享個人檔案
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 儲存庫展示區塊 -->
+        <main class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">儲存庫專案列表</h2>
+            </div>
+
+            <!-- 搜尋與篩選列 -->
+            <div class="controls-row">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="輸入專案名稱或描述進行搜尋...">
+                </div>
+                <div id="filter-tags" class="filter-tags">
+                    <span class="filter-tag active" data-lang="all">全部專案</span>
+                    <!-- 將由 JS 動態新增語言分類 -->
+                </div>
+            </div>
+
+            <!-- 卡片網格 -->
+            <div id="repos-container" class="repos-grid">
+                <!-- 預設靜態渲染 (Fallback / SSR) -->
+                <!-- 卡片 1: Agentic-Coding -->
+                <div class="repo-card" data-name="agentic-coding" data-lang="html">
+                    <div class="repo-meta">
+                        <div class="repo-header">
+                            <div class="repo-icon-wrapper">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                        </div>
+                        <h3 class="repo-title">
+                            <a href="https://github.com/RUYING77/Agentic-Coding" target="_blank">Agentic-Coding</a>
+                        </h3>
+                        <p class="repo-description">自主編碼 Agent 的技術實踐與專案展示庫。包含為您建置的這份高質感 GitHub 介紹首頁與自動化部署設定。</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-lang">
+                            <span class="lang-dot lang-html"></span>
+                            <span>HTML</span>
+                        </div>
+                        <div class="repo-links">
+                            <a href="https://github.com/RUYING77/Agentic-Coding" target="_blank" class="repo-link" title="查看原始碼">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卡片 2: HelloWord -->
+                <div class="repo-card" data-name="helloword" data-lang="html">
+                    <div class="repo-meta">
+                        <div class="repo-header">
+                            <div class="repo-icon-wrapper">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                        </div>
+                        <h3 class="repo-title">
+                            <a href="https://github.com/RUYING77/HelloWord" target="_blank">HelloWord</a>
+                        </h3>
+                        <p class="repo-description">與 HackMD 連動的儲存庫。主要用於存放技術筆記、開發紀錄與文檔撰寫，記錄學習與探索的精彩歷程。</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-lang">
+                            <span class="lang-dot lang-html"></span>
+                            <span>HTML</span>
+                        </div>
+                        <div class="repo-links">
+                            <a href="https://github.com/RUYING77/HelloWord" target="_blank" class="repo-link" title="查看原始碼">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卡片 3: html- -->
+                <div class="repo-card" data-name="html-" data-lang="html">
+                    <div class="repo-meta">
+                        <div class="repo-header">
+                            <div class="repo-icon-wrapper">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="repo-stars-badge">
+                                <i class="fas fa-star"></i> 1
+                            </div>
+                        </div>
+                        <h3 class="repo-title">
+                            <a href="https://github.com/RUYING77/html-" target="_blank">html-</a>
+                        </h3>
+                        <p class="repo-description">HTML/CSS 前端基礎語法實驗與網頁架構實踐儲存庫。此專案專注於打底網頁核心結構與基本排版技巧。</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-lang">
+                            <span class="lang-dot lang-html"></span>
+                            <span>HTML</span>
+                        </div>
+                        <div class="repo-links">
+                            <a href="https://github.com/RUYING77/html-" target="_blank" class="repo-link" title="查看原始碼">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 頁尾 -->
+        <footer>
+            <p>&copy; 2026 <a href="https://github.com/RUYING77" target="_blank">RUYING77</a>. Designed & Built with ❤️ by Antigravity Agent.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        const USERNAME = 'RUYING77';
+        const GITHUB_API_USER = `https://api.github.com/users/${USERNAME}`;
+        const GITHUB_API_REPOS = `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
+
+        // 靜態 Fallback 專案數據 (方便在 API 被限流或斷網時仍保有良好的展示)
+        let reposData = [
+            {
+                name: 'Agentic-Coding',
+                html_url: `https://github.com/${USERNAME}/Agentic-Coding`,
+                description: '自主編碼 Agent 的技術實踐與專案展示庫。包含為您建置的這份高質感 GitHub 介紹首頁與自動化部署設定。',
+                language: 'HTML',
+                stargazers_count: 0,
+                forks_count: 0
+            },
+            {
+                name: 'HelloWord',
+                html_url: `https://github.com/${USERNAME}/HelloWord`,
+                description: '與 HackMD 連動的儲存庫。主要用於存放技術筆記、開發紀錄與文檔撰寫，記錄學習與探索的精彩歷程。',
+                language: 'HTML',
+                stargazers_count: 0,
+                forks_count: 0
+            },
+            {
+                name: 'html-',
+                html_url: `https://github.com/${USERNAME}/html-`,
+                description: 'HTML/CSS 前端基礎語法實驗與網頁架構實踐儲存庫。此專案專注於打底網頁核心結構與基本排版技巧。',
+                language: 'HTML',
+                stargazers_count: 1,
+                forks_count: 0
+            }
+        ];
+
+        // 語言對應樣式
+        function getLangClass(lang) {
+            if (!lang) return 'lang-unknown';
+            const l = lang.toLowerCase();
+            if (l === 'html') return 'lang-html';
+            if (l === 'css') return 'lang-css';
+            if (l === 'javascript' || l === 'js') return 'lang-javascript';
+            if (l === 'python') return 'lang-python';
+            return 'lang-unknown';
+        }
+
+        // 專案類型圖示對應
+        function getRepoIcon(name) {
+            const n = name.toLowerCase();
+            if (n.includes('agent')) return 'fa-robot';
+            if (n.includes('hello')) return 'fa-book-open';
+            if (n.includes('html') || n.includes('css') || n.includes('web')) return 'fa-code';
+            return 'fa-folder-open';
+        }
+
+        // 初始化：動態獲取 GitHub 資訊
+        async function fetchGitHubData() {
+            try {
+                // 1. 獲取個人基本資料
+                const userResponse = await fetch(GITHUB_API_USER);
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    updateProfileDOM(userData);
+                }
+
+                // 2. 獲取專案清單
+                const reposResponse = await fetch(GITHUB_API_REPOS);
+                if (reposResponse.ok) {
+                    const fetchedRepos = await reposResponse.json();
+                    if (fetchedRepos && fetchedRepos.length > 0) {
+                        reposData = fetchedRepos.map(repo => ({
+                            name: repo.name,
+                            html_url: repo.html_url,
+                            description: repo.description || getFallbackDescription(repo.name),
+                            language: repo.language || 'Markdown',
+                            stargazers_count: repo.stargazers_count,
+                            forks_count: repo.forks_count
+                        }));
+                    }
+                }
+            } catch (error) {
+                console.warn('無法從 GitHub API 獲取資料，已使用本地預載數據顯示：', error);
+            } finally {
+                renderRepos(reposData);
+                generateFilterTags(reposData);
+            }
+        }
+
+        function getFallbackDescription(name) {
+            const fallback = {
+                'Agentic-Coding': '自主編碼 Agent 的技術實踐與專案展示庫。包含為您建置的這份高質感 GitHub 介紹首頁與自動化部署設定。',
+                'HelloWord': '與 HackMD 連動的儲存庫。主要用於存放技術筆記、開發紀錄與文檔撰寫，記錄學習與探索的精彩歷程。',
+                'html-': 'HTML/CSS 前端基礎語法實驗與網頁架構實踐儲存庫。此專案專注於打底網頁核心結構與基本排版技巧。'
+            };
+            return fallback[name] || '此專案目前尚無詳細描述，請點擊右下方連結前往 GitHub 儲存庫了解詳情。';
+        }
+
+        // 更新個人卡片資訊
+        function updateProfileDOM(user) {
+            if (user.avatar_url) document.getElementById('profile-avatar').src = user.avatar_url;
+            if (user.name) document.getElementById('profile-name').innerText = user.name;
+            if (user.bio) document.getElementById('profile-bio').innerText = user.bio;
+            if (user.public_repos !== undefined) document.getElementById('stat-repos').innerText = user.public_repos;
+            if (user.followers !== undefined) document.getElementById('stat-followers').innerText = user.followers;
+            if (user.following !== undefined) document.getElementById('stat-following').innerText = user.following;
+        }
+
+        // 渲染儲存庫清單
+        function renderRepos(repos) {
+            const container = document.getElementById('repos-container');
+            container.innerHTML = '';
+
+            repos.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'repo-card';
+                card.setAttribute('data-name', repo.name.toLowerCase());
+                card.setAttribute('data-lang', (repo.language || 'unknown').toLowerCase());
+
+                const starBadge = repo.stargazers_count > 0 
+                    ? `<div class="repo-stars-badge"><i class="fas fa-star"></i> ${repo.stargazers_count}</div>` 
+                    : '';
+
+                card.innerHTML = `
+                    <div class="repo-meta">
+                        <div class="repo-header">
+                            <div class="repo-icon-wrapper">
+                                <i class="fas ${getRepoIcon(repo.name)}"></i>
+                            </div>
+                            ${starBadge}
+                        </div>
+                        <h3 class="repo-title">
+                            <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                        </h3>
+                        <p class="repo-description">${repo.description}</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-lang">
+                            <span class="lang-dot ${getLangClass(repo.language)}"></span>
+                            <span>${repo.language}</span>
+                        </div>
+                        <div class="repo-links">
+                            <a href="${repo.html_url}" target="_blank" class="repo-link" title="查看原始碼">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 生成篩選標籤
+        function generateFilterTags(repos) {
+            const tagsContainer = document.getElementById('filter-tags');
+            
+            // 找出所有唯一的程式語言
+            const languages = new Set();
+            repos.forEach(repo => {
+                if (repo.language) languages.add(repo.language);
+            });
+
+            // 清空除「全部」以外的標籤
+            tagsContainer.innerHTML = '<span class="filter-tag active" data-lang="all">全部專案</span>';
+
+            languages.forEach(lang => {
+                const tag = document.createElement('span');
+                tag.className = 'filter-tag';
+                tag.setAttribute('data-lang', lang.toLowerCase());
+                tag.innerText = lang;
+                tagsContainer.appendChild(tag);
+            });
+
+            // 重新綁定事件
+            bindFilterEvents();
+        }
+
+        // 篩選與搜尋功能
+        function bindFilterEvents() {
+            const searchInput = document.getElementById('search-input');
+            const tags = document.querySelectorAll('.filter-tag');
+
+            function filterRepos() {
+                const query = searchInput.value.toLowerCase();
+                const activeTag = document.querySelector('.filter-tag.active');
+                const selectedLang = activeTag ? activeTag.getAttribute('data-lang') : 'all';
+                const cards = document.querySelectorAll('.repo-card');
+
+                cards.forEach(card => {
+                    const name = card.getAttribute('data-name');
+                    const lang = card.getAttribute('data-lang');
+                    const description = card.querySelector('.repo-description').innerText.toLowerCase();
+
+                    const matchesSearch = name.includes(query) || description.includes(query);
+                    const matchesLang = selectedLang === 'all' || lang === selectedLang;
+
+                    if (matchesSearch && matchesLang) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // 搜尋監聽
+            searchInput.addEventListener('input', filterRepos);
+
+            // 標籤監聽
+            tags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    tags.forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    filterRepos();
+                });
+            });
+        }
+
+        // 分享按鈕功能
+        document.getElementById('share-profile-btn').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'RUYING77 GitHub Profile',
+                    text: '看看 RUYING77 的 GitHub 精選儲存庫與個人介紹網頁！',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback: 複製連結到剪貼簿
+                navigator.clipboard.writeText(window.location.href);
+                alert('已將網址複製到剪貼簿！');
+            }
+        });
+
+        // 頁面載入後自動獲取資料
+        window.addEventListener('DOMContentLoaded', fetchGitHubData);
+    </script>
+</body>
+</html>
